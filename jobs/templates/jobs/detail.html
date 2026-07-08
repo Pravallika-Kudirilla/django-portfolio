@@ -1,54 +1,75 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Project Detail</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Detailed overview of project: {{ job.title }}. Built by Pravallika Kudirilla, a Full Stack Developer.">
+    <meta name="author" content="Pravallika Kudirilla">
+    <title>{{ job.title }} | Project Details</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Custom Matte Black CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
-<div class="container mt-5 text-center">
+<div class="container d-flex align-items-center justify-content-center min-vh-100 py-5">
+    <div class="detail-container text-center w-100">
+        
+        <h1 class="detail-title">{{ job.title }}</h1>
 
-    <h1>Project Details</h1>
+        <div class="detail-img-container d-inline-block shadow-lg">
+            <img src="{{ job.image.url }}"
+                 class="img-fluid rounded"
+                 alt="{{ job.title }}"
+                 style="max-height: 450px; width: auto; object-fit: contain;">
+        </div>
 
-    <img src="{{ job.image.url }}"
-         class="img-fluid rounded my-4"
-         width="500">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <p class="detail-desc">
+                    {{ job.summary }}
+                </p>
+            </div>
+        </div>
 
-    <p class="lead">
-        {{ job.title }}
-    </p>
+        <div class="detail-actions">
+            {% if job.github_link %}
+                <a href="{{ job.github_link }}"
+                   id="github-btn-{{ job.id }}"
+                   target="_blank"
+                   class="btn btn-custom-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-github me-2" viewBox="0 0 16 16" style="vertical-align: text-bottom;">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                    </svg>GitHub
+                </a>
+            {% endif %}
 
-    <p class="text-body-secondary">
-        {{ job.summary }}
-    </p>
-    <div class="mt-4">
+            {% if job.live_link %}
+                <a href="{{ job.live_link }}"
+                   id="live-btn-{{ job.id }}"
+                   target="_blank"
+                   class="btn btn-custom-gold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-box-arrow-up-right me-2" viewBox="0 0 16 16" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                    </svg>Live Demo
+                </a>
+            {% endif %}
+        </div>
 
-    {% if job.github_link %}
-        <a href="{{ job.github_link }}"
-           target="_blank"
-           class="btn btn-dark">
-            GitHub
-        </a>
-    {% endif %}
+        <div class="mt-4">
+            <a href="{% url 'home' %}" id="back-to-home-btn" class="btn btn-custom-secondary">
+                ← Back to Home
+            </a>
+        </div>
 
-    {% if job.live_link %}
-        <a href="{{ job.live_link }}"
-           target="_blank"
-           class="btn btn-success">
-            Live Demo
-        </a>
-    {% endif %}
-
-    </div><br>
-
-    <a href="{% url 'home' %}" class="btn btn-primary">
-        ← Back to Home
-    </a>
-
+    </div>
 </div>
 
 </body>
-</html>
+</html>

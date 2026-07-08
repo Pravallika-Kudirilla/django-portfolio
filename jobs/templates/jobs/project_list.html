@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All Projects of {% if profile %}{{ profile.name }}{% endif %}">
+    <title>All Projects | {% if profile %}{{ profile.name }}{% else %}Developer{% endif %}</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- Background Glowing Blobs -->
+    <div class="glow-blob blob-1" id="spotlight-blob"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <!-- Sticky Navbar -->
+    <header class="navbar-header scrolled">
+        <div class="container navbar-container">
+            <a href="{% url 'home' %}" class="navbar-logo" id="nav-logo-btn">
+                <span>PK</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="navbar-menu-wrapper" id="navbar-menu">
+                <nav class="navbar-nav-list">
+                    <a href="{% url 'home' %}#home" class="navbar-nav-link">Home</a>
+                    <a href="{% url 'home' %}#about" class="navbar-nav-link">About</a>
+                    <a href="{% url 'home' %}#skills" class="navbar-nav-link">Skills</a>
+                    <a href="{% url 'home' %}#projects" class="navbar-nav-link active">Projects</a>
+                    <a href="{% url 'home' %}#experience" class="navbar-nav-link">Experience</a>
+                    <a href="{% url 'home' %}#contact" class="navbar-nav-link">Contact</a>
+                </nav>
+
+                {% if profile and profile.resume %}
+                <a href="{{ profile.get_resume_url }}" target="_blank" class="btn-premium" style="padding: 0.5rem 1.5rem; font-size: 0.85rem;">
+                    <i class="fa-solid fa-download"></i> Resume
+                </a>
+                {% endif %}
+            </div>
+
+            <button class="mobile-hamburger" aria-label="Toggle Menu" id="mobile-hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main List content -->
+    <main style="padding-top: 100px; min-height: calc(100vh - 200px);">
+        <!-- List Hero Title -->
+        <section class="list-hero-section">
+            <div class="container">
+                <h1 class="list-hero-title gradient-text">Project Showcase</h1>
+                <p class="list-hero-desc">Explore the detailed engineering designs, full tech stacks, and live applications of projects I have built.</p>
+            </div>
+        </section>
+
+        <!-- Search and Filters Section -->
+        <section class="container" style="margin-bottom: 20px;">
+            <div class="glass-card filters-bar-wrapper">
+                <div class="search-filter-grid">
+                    <!-- Search Input -->
+                    <div class="search-input-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="project-search" class="search-control" placeholder="Search projects by title, summary...">
+                    </div>
+                    
+                    <!-- Filters List -->
+                    <div class="tech-filter-pills" id="tech-filters">
+                        <div class="filter-pill active" data-filter="all">All Tech</div>
+                        {% for skill in skills %}
+                        <div class="filter-pill" data-filter="{{ skill.skill|lower|cut:' ' }}">{{ skill.skill }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section class="container" style="margin-bottom: 80px;">
+            <div class="projects-grid" id="projects-list-grid">
+                {% for job in jobs %}
+                <a href="{% url 'project_detail' job.slug %}" class="project-card-link project-list-item" 
+                   data-title="{{ job.title|lower }} {{ job.summary|lower }} {{ job.overview|lower }}" 
+                   data-tech="{% for tech in job.technologies.all %}{{ tech.skill|lower|cut:' ' }},{% endfor %}">
+                    <div class="project-card glass-card">
+                        <div class="project-thumbnail-wrapper">
+                            {% if job.image %}
+                            <img src="{{ job.get_image_url }}" alt="{{ job.title }}" class="project-image">
+                            {% endif %}
+                        </div>
+                        
+                        <div class="project-card-content">
+                            <h3 class="project-card-title">{{ job.title }}</h3>
+                            
+                            <p class="project-card-description">
+                                {{ job.summary }}
+                            </p>
+                            
+                            <div class="project-tech-badges">
+                                {% for tech in job.technologies.all %}
+                                <span class="tech-badge"><i class="fa-solid fa-code-branch"></i> {{ tech.skill }}</span>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="project-card-footer">
+                                <span class="btn-view-details">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            
+            <div id="no-projects-found" class="text-center text-secondary" style="display: none; padding: 40px 0; font-size: 1.1rem;">
+                <i class="fa-solid fa-folder-open" style="font-size: 2.5rem; margin-bottom: 12px; display: block; color: var(--text-muted);"></i>
+                No projects match your search or filter tags.
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer-wrapper" id="footer-section">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <a href="{% url 'home' %}" class="footer-logo" id="footer-logo-btn">
+                    <span>{% if profile %}{{ profile.name }}{% endif %}</span>
+                </a>
+                <p class="footer-desc">
+                    Designing and engineering premium digital products, web applications, and interactive user experiences.
+                </p>
+                <div class="footer-social-wrapper">
+                    {% if profile and profile.github_link %}
+                    <a href="{{ profile.github_link }}" target="_blank" class="footer-social-btn" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile and profile.linkedin_link %}
+                    <a href="{{ profile.linkedin_link }}" target="_blank" class="footer-social-btn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Quick Links</h4>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'home' %}#home" class="footer-link">Home</a></li>
+                    <li><a href="{% url 'home' %}#about" class="footer-link">About</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Skills</a></li>
+                    <li><a href="{% url 'home' %}#projects" class="footer-link">Projects</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Services</h4>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Web Development</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Backend Development</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">API Integrations</a></li>
+                </ul>
+            </div>
+
+            <!-- Connect Info -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Connect</h4>
+                <div class="footer-contact-info-list">
+                    <div class="footer-contact-item">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span>{% if profile %}{{ profile.email }}{% endif %}</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>{% if profile %}{{ profile.location }}{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech-themed Abstract Background Decoration -->
+            <svg class="footer-branch-illustration" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1"
+                opacity="0.1">
+                <circle cx="90" cy="90" r="40" stroke="var(--primary)" stroke-dasharray="2 2" />
+                <circle cx="90" cy="90" r="60" stroke="var(--accent)" stroke-dasharray="4 4" />
+                <circle cx="90" cy="90" r="80" stroke="var(--primary-light)" />
+            </svg>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; <span id="copyright-year">2026</span> {% if profile %}{{ profile.name }}{% endif %}. All rights reserved.</p>
+            <p>Crafted with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> & Code</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top-btn" aria-label="Back to Top" id="back-to-top-button">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme and Search Logic JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('copyright-year').innerText = new Date().getFullYear();
+
+            // Mobile menu toggle
+            const hamburger = document.getElementById("mobile-hamburger-btn");
+            const menu = document.getElementById("navbar-menu");
+
+            if (hamburger && menu) {
+                hamburger.addEventListener("click", function() {
+                    hamburger.classList.toggle("active");
+                    menu.classList.toggle("active");
+                });
+            }
+
+            // Scroll events (Progress Bar, Back-to-Top)
+            const progressBar = document.querySelector(".scroll-progress-bar");
+            const backToTopBtn = document.getElementById("back-to-top-button");
+
+            window.addEventListener("scroll", function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                if (progressBar) {
+                    progressBar.style.width = scrollPercent + "%";
+                }
+                
+                if (backToTopBtn) {
+                    if (scrollTop > 400) {
+                        backToTopBtn.classList.add("active");
+                    } else {
+                        backToTopBtn.classList.remove("active");
+                    }
+                }
+            });
+
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener("click", function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                });
+            }
+
+            // FILTERING LOGIC
+            const searchInput = document.getElementById("project-search");
+            const filterPills = document.querySelectorAll(".filter-pill");
+            const projectItems = document.querySelectorAll(".project-list-item");
+            const noProjectsFound = document.getElementById("no-projects-found");
+
+            let currentSearch = "";
+            let currentFilter = "all";
+
+            function filterProjects() {
+                let matchCount = 0;
+                projectItems.forEach(item => {
+                    const titleAndDesc = item.getAttribute("data-title");
+                    const techStack = item.getAttribute("data-tech").split(",");
+                    
+                    const matchesSearch = titleAndDesc.includes(currentSearch);
+                    const matchesFilter = currentFilter === "all" || techStack.includes(currentFilter);
+
+                    if (matchesSearch && matchesFilter) {
+                        item.style.display = "block";
+                        matchCount++;
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+
+                if (matchCount === 0) {
+                    noProjectsFound.style.display = "block";
+                } else {
+                    noProjectsFound.style.display = "none";
+                }
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener("input", function(e) {
+                    currentSearch = e.target.value.toLowerCase().trim();
+                    filterProjects();
+                });
+            }
+
+            filterPills.forEach(pill => {
+                pill.addEventListener("click", function() {
+                    filterPills.forEach(p => p.classList.remove("active"));
+                    pill.classList.add("active");
+                    currentFilter = pill.getAttribute("data-filter").toLowerCase();
+                    filterProjects();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

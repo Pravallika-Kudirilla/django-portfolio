@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ job.title }} | Project Details - {% if profile %}{{ profile.name }}{% endif %}">
+    <title>{{ job.title }} | Project Details</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- Background Glowing Blobs -->
+    <div class="glow-blob blob-1" id="spotlight-blob"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <!-- Sticky Navbar -->
+    <header class="navbar-header scrolled">
+        <div class="container navbar-container">
+            <a href="{% url 'home' %}" class="navbar-logo" id="nav-logo-btn">
+                <span>PK</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="navbar-menu-wrapper" id="navbar-menu">
+                <nav class="navbar-nav-list">
+                    <a href="{% url 'home' %}#home" class="navbar-nav-link">Home</a>
+                    <a href="{% url 'home' %}#about" class="navbar-nav-link">About</a>
+                    <a href="{% url 'home' %}#skills" class="navbar-nav-link">Skills</a>
+                    <a href="{% url 'home' %}#projects" class="navbar-nav-link active">Projects</a>
+                    <a href="{% url 'home' %}#experience" class="navbar-nav-link">Experience</a>
+                    <a href="{% url 'home' %}#contact" class="navbar-nav-link">Contact</a>
+                </nav>
+
+                {% if profile and profile.resume %}
+                <a href="{{ profile.get_resume_url }}" target="_blank" class="btn-premium" style="padding: 0.5rem 1.5rem; font-size: 0.85rem;">
+                    <i class="fa-solid fa-download"></i> Resume
+                </a>
+                {% endif %}
+            </div>
+
+            <button class="mobile-hamburger" aria-label="Toggle Menu" id="mobile-hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content wrapper -->
+    <main style="padding-top: 100px;">
+        <div class="container project-detail-wrapper" style="margin-bottom: 60px;">
+            
+            <!-- Project Hero Banner -->
+            {% if job.image %}
+            <section class="project-hero glass-card" style="background-image: linear-gradient(rgba(43, 29, 22, 0.85), rgba(43, 29, 22, 0.95)), url('{{ job.get_image_url }}'); padding: 60px 40px;">
+            {% else %}
+            <section class="project-hero glass-card" style="background-image: linear-gradient(rgba(43, 29, 22, 0.85), rgba(43, 29, 22, 0.95)); padding: 60px 40px;">
+            {% endif %}
+                <div class="project-hero-container">
+                    <div class="project-hero-header">
+                        <span class="project-hero-category">{{ job.title }}</span>
+                        {% if job.is_featured %}
+                        <span class="project-hero-featured"><i class="fa-solid fa-star"></i> Featured Project</span>
+                        {% endif %}
+                    </div>
+                    
+                    <h1 class="project-hero-title">{{ job.title }}</h1>
+                    <p class="project-hero-short-desc">{{ job.summary }}</p>
+                    
+                    <!-- Quick Actions Buttons -->
+                    <div class="project-hero-actions">
+                        {% if job.live_link %}
+                        <a href="{{ job.live_link }}" target="_blank" class="hero-action-btn live-btn">
+                            <i class="fa-solid fa-laptop"></i> Live Demo
+                        </a>
+                        {% endif %}
+                        
+                        {% if job.github_link %}
+                        <a href="{{ job.github_link }}" target="_blank" class="hero-action-btn github-btn">
+                            <i class="fa-brands fa-github"></i> View Code
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Content Section -->
+            <div class="project-main-grid" style="margin-top: 40px;">
+                <!-- Left side detail sections -->
+                <div class="project-content-left">
+                    <!-- Overview -->
+                    <div class="project-section glass-card" data-aos="fade-up">
+                        <h2 class="project-section-title"><i class="fa-solid fa-align-left"></i> Project Overview</h2>
+                        <div class="project-rich-content">
+                            <p>{{ job.overview|linebreaksbr }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Features -->
+                    {% if features_list %}
+                    <div class="project-section glass-card" data-aos="fade-up">
+                        <h2 class="project-section-title"><i class="fa-solid fa-star"></i> Key Features</h2>
+                        <div class="project-rich-content">
+                            <ul style="list-style-type: none; margin-left: 0; padding-left: 0;">
+                                {% for feat in features_list %}
+                                <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 5px; font-size: 0.95rem;"></i>
+                                    <span>{{ feat }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Challenges & Solutions -->
+                    {% if challenges_list %}
+                    <div class="project-section glass-card" data-aos="fade-up">
+                        <h2 class="project-section-title"><i class="fa-solid fa-triangle-exclamation"></i> Challenges & Solutions</h2>
+                        <div class="project-rich-content">
+                            <ul style="list-style-type: none; margin-left: 0; padding-left: 0;">
+                                {% for chal in challenges_list %}
+                                <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+                                    <i class="fa-solid fa-circle-info" style="color: var(--primary-light); margin-top: 5px; font-size: 0.95rem;"></i>
+                                    <span>{{ chal }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Right side sidebar info -->
+                <div class="project-content-right">
+                    <!-- Technologies Used -->
+                    <div class="project-sidebar-card glass-card" data-aos="fade-up">
+                        <h3 class="sidebar-title"><i class="fa-solid fa-microchip"></i> Technologies</h3>
+                        <div class="project-tech-list">
+                            {% for tech in job.technologies.all %}
+                            <span class="sidebar-tech-badge"><i class="{{ tech.icon_class }}"></i> {{ tech.skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Project Metadata Info -->
+                    <div class="project-sidebar-card glass-card" data-aos="fade-up" style="margin-top: 25px;">
+                        <h3 class="sidebar-title"><i class="fa-solid fa-info-circle"></i> Project Metadata</h3>
+                        <ul class="metadata-list" style="padding-left: 0;">
+                            <li>
+                                <span class="meta-label">Category:</span>
+                                <span class="meta-value">{{ job.title|truncatechars:20 }}</span>
+                            </li>
+                            <li>
+                                <span class="meta-label">Status:</span>
+                                <span class="meta-value status-badge-inline {% if job.status == 'Completed' %}completed{% else %}in-progress{% endif %}">
+                                    {{ job.status }}
+                                </span>
+                            </li>
+                            {% if job.published_date %}
+                            <li>
+                                <span class="meta-label">Published:</span>
+                                <span class="meta-value">{{ job.published_date }}</span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot Gallery -->
+            {% if job.gallery_images.all %}
+            <section class="project-gallery-section" data-aos="fade-up" style="margin-top: 40px;">
+                <h2 class="gallery-section-title"><i class="fa-solid fa-images"></i> Project Gallery</h2>
+                <div class="gallery-grid">
+                    {% for item in job.gallery_images.all %}
+                    <div class="gallery-item-wrapper" onclick="openLightbox('{{ item.get_image_url }}')">
+                        <img src="{{ item.get_image_url }}" alt="{{ item.caption|default:job.title }}" class="gallery-img">
+                        <div class="gallery-hover-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- Lightbox Overlay -->
+            <div id="gallery-lightbox" class="lightbox-overlay" onclick="closeLightbox()">
+                <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+                <img class="lightbox-content" id="lightbox-image" alt="Screenshot Lightbox View">
+            </div>
+
+            <!-- Project Navigation links -->
+            <nav class="project-navigation-section" data-aos="fade-up">
+                <div class="project-nav-grid">
+                    {% if prev_job %}
+                    <a href="{% url 'project_detail' prev_job.slug %}" class="project-nav-link prev-link glass-card">
+                        <div class="nav-direction"><i class="fa-solid fa-arrow-left"></i> Previous Project</div>
+                        <div class="nav-project-title">{{ prev_job.title }}</div>
+                    </a>
+                    {% else %}
+                    <div class="project-nav-link-disabled prev-link-disabled glass-card">
+                        <div class="nav-direction">First Project</div>
+                        <div class="nav-project-title">No older project</div>
+                    </div>
+                    {% endif %}
+
+                    {% if next_job %}
+                    <a href="{% url 'project_detail' next_job.slug %}" class="project-nav-link next-link glass-card">
+                        <div class="nav-direction">Next Project <i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="nav-project-title">{{ next_job.title }}</div>
+                    </a>
+                    {% else %}
+                    <div class="project-nav-link-disabled next-link-disabled glass-card">
+                        <div class="nav-direction">Last Project</div>
+                        <div class="nav-project-title">No newer project</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <!-- Related Projects -->
+            {% if related_jobs %}
+            <section class="related-projects-section" style="margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px;">
+                <h2 class="related-projects-title"><i class="fa-solid fa-link"></i> Related Projects</h2>
+                <div class="projects-grid" style="margin-top: 30px;">
+                    {% for rel in related_jobs %}
+                    <a href="{% url 'project_detail' rel.slug %}" class="project-card-link">
+                        <div class="project-card glass-card">
+                            <div class="project-thumbnail-wrapper">
+                                {% if rel.image %}
+                                <img src="{{ rel.get_image_url }}" alt="{{ rel.title }}" class="project-image">
+                                {% endif %}
+                            </div>
+                            
+                            <div class="project-card-content">
+                                <h3 class="project-card-title">{{ rel.title }}</h3>
+                                <p class="project-card-description">
+                                    {{ rel.summary }}
+                                </p>
+                                <div class="project-tech-badges">
+                                    {% for tech in rel.technologies.all %}
+                                    <span class="tech-badge"><i class="fa-solid fa-code-branch"></i> {{ tech.skill }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="project-card-footer">
+                                    <span class="btn-view-details">
+                                        View Details <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer-wrapper" id="footer-section">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <a href="{% url 'home' %}" class="footer-logo" id="footer-logo-btn">
+                    <span>{% if profile %}{{ profile.name }}{% endif %}</span>
+                </a>
+                <p class="footer-desc">
+                    Designing and engineering premium digital products, web applications, and interactive user experiences.
+                </p>
+                <div class="footer-social-wrapper">
+                    {% if profile and profile.github_link %}
+                    <a href="{{ profile.github_link }}" target="_blank" class="footer-social-btn" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile and profile.linkedin_link %}
+                    <a href="{{ profile.linkedin_link }}" target="_blank" class="footer-social-btn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Quick Links</h4>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'home' %}#home" class="footer-link">Home</a></li>
+                    <li><a href="{% url 'home' %}#about" class="footer-link">About</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Skills</a></li>
+                    <li><a href="{% url 'home' %}#projects" class="footer-link">Projects</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Services</h4>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Web Development</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">Backend Development</a></li>
+                    <li><a href="{% url 'home' %}#skills" class="footer-link">API Integrations</a></li>
+                </ul>
+            </div>
+
+            <!-- Connect Info -->
+            <div class="footer-column">
+                <h4 class="footer-col-title">Connect</h4>
+                <div class="footer-contact-info-list">
+                    <div class="footer-contact-item">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span>{% if profile %}{{ profile.email }}{% endif %}</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>{% if profile %}{{ profile.location }}{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech-themed Abstract Background Decoration -->
+            <svg class="footer-branch-illustration" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1"
+                opacity="0.1">
+                <circle cx="90" cy="90" r="40" stroke="var(--primary)" stroke-dasharray="2 2" />
+                <circle cx="90" cy="90" r="60" stroke="var(--accent)" stroke-dasharray="4 4" />
+                <circle cx="90" cy="90" r="80" stroke="var(--primary-light)" />
+            </svg>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; <span id="copyright-year">2026</span> {% if profile %}{{ profile.name }}{% endif %}. All rights reserved.</p>
+            <p>Crafted with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> & Code</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top-btn" aria-label="Back to Top" id="back-to-top-button">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- AOS Script Initialization -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 80,
+                easing: 'ease-out-cubic'
+            });
+            document.getElementById('copyright-year').innerText = new Date().getFullYear();
+        });
+    </script>
+
+    <!-- Project JS Controller -->
+    <script>
+        // Simple Lightbox Actions
+        function openLightbox(imgUrl) {
+            document.getElementById('lightbox-image').src = imgUrl;
+            document.getElementById('gallery-lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('gallery-lightbox').classList.remove('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mobile Menu Toggle
+            const hamburger = document.getElementById("mobile-hamburger-btn");
+            const menu = document.getElementById("navbar-menu");
+
+            if (hamburger && menu) {
+                hamburger.addEventListener("click", function() {
+                    hamburger.classList.toggle("active");
+                    menu.classList.toggle("active");
+                });
+            }
+
+            // Scroll events (Progress Bar, Back-to-Top)
+            const progressBar = document.querySelector(".scroll-progress-bar");
+            const backToTopBtn = document.getElementById("back-to-top-button");
+
+            window.addEventListener("scroll", function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                if (progressBar) {
+                    progressBar.style.width = scrollPercent + "%";
+                }
+                
+                if (backToTopBtn) {
+                    if (scrollTop > 400) {
+                        backToTopBtn.classList.add("active");
+                    } else {
+                        backToTopBtn.classList.remove("active");
+                    }
+                }
+            });
+
+            // Mouse Tracking Spotlight
+            const blob = document.getElementById("spotlight-blob");
+            if (blob) {
+                document.addEventListener("mousemove", function(e) {
+                    const x = e.clientX - 300;
+                    const y = e.clientY - 300;
+                    blob.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                });
+            }
+
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener("click", function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
