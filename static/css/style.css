@@ -6,40 +6,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Premium Beach & Ocean Blue Palette */
-  --bg-base: #f0f6fc;
-  /* Soft sky/mist blue */
+  /* Premium Ocean Blue & Beach Light Theme (No Green) */
+  --bg-base: #f0f7fd;
+  /* Soft sky/ocean mist blue base */
   --bg-surface: rgba(255, 255, 255, 0.76);
   /* Frosted wave white */
   --bg-surface-hover: rgba(255, 255, 255, 0.98);
-  --border-color: rgba(27, 122, 140, 0.1);
-  /* Soft teal outline */
-  --border-hover: rgba(27, 122, 140, 0.28);
-  /* Cyan surge outline */
+  --border-color: rgba(30, 144, 255, 0.12);
+  /* Soft ocean blue outline */
+  --border-hover: rgba(30, 144, 255, 0.32);
+  /* Ocean wave outline */
 
-  --text-primary: #0a1f33;
-  /* Deep navy text */
-  --text-secondary: #274b68;
-  /* Ocean blue text */
-  --text-muted: #496f8c;
-  /* Cool sea spray gray */
+  --text-primary: #0c2340;
+  /* Deep navy text - highest contrast */
+  --text-secondary: #1a4a7c;
+  /* Deep royal ocean blue text */
+  --text-muted: #507ea9;
+  /* Muted sea spray blue text */
 
-  --primary: #157e93;
-  /* Shimmering deep sea teal */
-  --primary-light: #2da1b8;
-  /* Clear sea-sky blue */
-  --secondary: #39b3cc;
-  /* Bright aqua wave */
-  --accent: #dca368;
-  /* Sandy gold accent */
+  --primary: #0077b6;
+  /* Shimmering sapphire ocean blue */
+  --primary-light: #0096c7;
+  /* Bright sky blue wave */
+  --secondary: #0077b6;
+  /* Cool deep ocean blue */
+  --accent: #dfb075;
+  /* Sunlit beach sand gold */
 
-  --gradient-accent: linear-gradient(135deg, #0d5c6b 0%, #1e99b0 50%, #dca368 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #074652 0%, #177f94 50%, #cca26a 100%);
-  --gradient-glow: radial-gradient(circle, rgba(30, 144, 255, 0.12) 0%, rgba(64, 224, 208, 0.04) 50%, transparent 70%);
+  --gradient-accent: linear-gradient(135deg, #0077b6 0%, #4fc3f7 55%, #dfb075 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #005f92 0%, #29b6f6 55%, #cca062 100%);
+  --gradient-glow: radial-gradient(circle, rgba(79, 195, 247, 0.16) 0%, rgba(223, 176, 117, 0.05) 50%, transparent 70%);
 
-  --shadow-main: 0 20px 40px -15px rgba(13, 35, 58, 0.06);
-  /* Soft sea shadow */
-  --shadow-glow: 0 0 20px rgba(30, 144, 255, 0.07);
+  --shadow-main: 0 20px 40px -15px rgba(0, 95, 146, 0.07);
+  /* Soft ocean shadow */
+  --shadow-glow: 0 0 20px rgba(79, 195, 247, 0.08);
 
   --font-headings: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -97,12 +97,12 @@ h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(27, 122, 140, 0.25);
+  background: rgba(30, 144, 255, 0.25);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(27, 122, 140, 0.5);
+  background: rgba(30, 144, 255, 0.5);
 }
 
 /* Interactive Cursor Glowing Spotlight */
@@ -182,7 +182,7 @@ h6 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 15px rgba(111, 78, 55, 0.2);
+  box-shadow: 0 4px 15px rgba(30, 144, 255, 0.25);
   transition: all var(--transition-speed) cubic-bezier(0.165, 0.84, 0.44, 1);
   text-decoration: none;
   cursor: pointer;
@@ -191,7 +191,7 @@ h6 {
 .btn-premium:hover {
   transform: translateY(-3px);
   background: var(--gradient-accent-hover);
-  box-shadow: 0 8px 25px rgba(111, 78, 55, 0.35);
+  box-shadow: 0 8px 25px rgba(30, 144, 255, 0.45);
 }
 
 .btn-glass-secondary {
@@ -229,7 +229,7 @@ h6 {
   max-width: 1100px;
   z-index: 1000;
   border-radius: 50px;
-  background: rgba(240, 246, 252, 0.65);
+  background: rgba(240, 247, 253, 0.65);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -239,8 +239,8 @@ h6 {
 
 .navbar-header.scrolled {
   top: 12px;
-  background: rgba(240, 246, 252, 0.9);
-  border-color: rgba(27, 122, 140, 0.15);
+  background: rgba(240, 247, 253, 0.9);
+  border-color: rgba(30, 144, 255, 0.15);
 }
 
 .navbar-container {
@@ -309,7 +309,7 @@ h6 {
 .navbar-nav-link:hover,
 .navbar-nav-link.active {
   color: var(--primary);
-  background: rgba(27, 122, 140, 0.04);
+  background: rgba(30, 144, 255, 0.04);
 }
 
 /* Mobile Toggle */
@@ -463,7 +463,7 @@ h6 {
   height: 280px;
   border-radius: 4px;
   background: #ffffff;
-  border: 1px solid rgba(27, 122, 140, 0.12);
+  border: 1px solid rgba(30, 144, 255, 0.12);
   padding: 12px 12px 12px 12px;
   /* Balanced bottom padding for polaroid look */
   box-shadow: 0 15px 35px -10px rgba(44, 27, 17, 0.12);
@@ -481,7 +481,7 @@ h6 {
   width: 100%;
   height: 250px;
   object-fit: cover;
-  border: 1px solid rgba(27, 122, 140, 0.05);
+  border: 1px solid rgba(30, 144, 255, 0.05);
   background-color: var(--bg-base);
 }
 
@@ -536,7 +536,7 @@ h6 {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(27, 122, 140, 0.08);
+  background: rgba(30, 144, 255, 0.08);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -591,7 +591,7 @@ h6 {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(27, 122, 140, 0.06);
+  background: rgba(30, 144, 255, 0.06);
   color: var(--primary-light);
   display: flex;
   align-items: center;
@@ -753,8 +753,8 @@ h6 {
 }
 
 .tech-badge {
-  background: rgba(27, 122, 140, 0.05);
-  border: 1px solid rgba(27, 122, 140, 0.12);
+  background: rgba(30, 144, 255, 0.05);
+  border: 1px solid rgba(30, 144, 255, 0.12);
   color: var(--primary);
   padding: 4px 10px;
   border-radius: 20px;
@@ -769,7 +769,7 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(27, 122, 140, 0.06);
+  border-top: 1px solid rgba(30, 144, 255, 0.06);
   padding-top: 15px;
 }
 
@@ -807,7 +807,7 @@ h6 {
 .experience-timeline {
   position: relative;
   padding-left: 35px;
-  border-left: 2px solid rgba(27, 122, 140, 0.15);
+  border-left: 2px solid rgba(30, 144, 255, 0.15);
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -861,7 +861,7 @@ h6 {
   width: 50px;
   height: 50px;
   border-radius: 12px;
-  background: rgba(27, 122, 140, 0.08);
+  background: rgba(30, 144, 255, 0.08);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -894,8 +894,8 @@ h6 {
 }
 
 .experience-date-badge {
-  background: rgba(27, 122, 140, 0.06);
-  border: 1px solid rgba(27, 122, 140, 0.12);
+  background: rgba(30, 144, 255, 0.06);
+  border: 1px solid rgba(30, 144, 255, 0.12);
   color: var(--text-secondary);
   padding: 4px 14px;
   border-radius: 20px;
@@ -964,7 +964,7 @@ h6 {
 .timeline-container {
   position: relative;
   padding-left: 20px;
-  border-left: 2px dashed rgba(27, 122, 140, 0.25);
+  border-left: 2px dashed rgba(30, 144, 255, 0.25);
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -1059,7 +1059,7 @@ h6 {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: rgba(27, 122, 140, 0.08);
+  background: rgba(30, 144, 255, 0.08);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -1127,7 +1127,7 @@ h6 {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: rgba(220, 163, 104, 0.08);
+  background: rgba(223, 176, 117, 0.08);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -1209,7 +1209,7 @@ h6 {
 }
 
 .contact-left-pane {
-  background: #0c2942;
+  background: #0c2f54;
   /* Deep espresso background */
   color: #ffffff;
   padding: 45px;
@@ -1228,7 +1228,7 @@ h6 {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: rgba(220, 163, 104, 0.08);
+  background: rgba(223, 176, 117, 0.08);
   filter: blur(20px);
 }
 
@@ -1304,7 +1304,7 @@ h6 {
 .contact-right-pane {
   padding: 45px;
   background: #ffffff;
-  background-image: radial-gradient(rgba(27, 122, 140, 0.07) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(rgba(30, 144, 255, 0.07) 1.2px, transparent 1.2px);
   background-size: 18px 18px;
   display: flex;
   flex-direction: column;
@@ -1321,7 +1321,7 @@ h6 {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 2px solid rgba(27, 122, 140, 0.12);
+  border-bottom: 2px solid rgba(30, 144, 255, 0.12);
   color: var(--text-primary);
   padding: 10px 0;
   font-family: inherit;
@@ -1388,7 +1388,7 @@ h6 {
 
 .footer-wrapper {
   padding: 80px 0 30px;
-  background-color: #092238;
+  background-color: #09223c;
   /* Deep espresso anchor background */
   border-top: 1px solid var(--border-color);
   position: relative;
@@ -1576,7 +1576,7 @@ h6 {
   border-radius: 20px;
   box-shadow: var(--shadow-main);
   overflow: hidden;
-  border: 1px solid rgba(27, 122, 140, 0.12);
+  border: 1px solid rgba(30, 144, 255, 0.12);
   margin-top: 20px;
 }
 
@@ -1593,8 +1593,8 @@ h6 {
 }
 
 .project-hero-category {
-  background: rgba(27, 122, 140, 0.08);
-  border: 1px solid rgba(27, 122, 140, 0.25);
+  background: rgba(30, 144, 255, 0.08);
+  border: 1px solid rgba(30, 144, 255, 0.25);
   color: var(--primary);
   padding: 4px 14px;
   border-radius: 20px;
@@ -1604,8 +1604,8 @@ h6 {
 }
 
 .project-hero-featured {
-  background: rgba(220, 163, 104, 0.25);
-  border: 1px solid rgba(220, 163, 104, 0.5);
+  background: rgba(223, 176, 117, 0.25);
+  border: 1px solid rgba(223, 176, 117, 0.5);
   color: var(--accent);
   padding: 4px 14px;
   border-radius: 20px;
@@ -1848,7 +1848,7 @@ h6 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(27, 122, 140, 0.3);
+  background: rgba(30, 144, 255, 0.3);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1874,7 +1874,7 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(12, 41, 66, 0.95);
+  background: rgba(12, 35, 64, 0.95);
   /* Deep espresso lightbox bg */
   z-index: 2000;
   display: flex;
@@ -2038,7 +2038,7 @@ h6 {
 .search-control:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(27, 122, 140, 0.15);
+  box-shadow: 0 0 15px rgba(30, 144, 255, 0.15);
 }
 
 .tech-filter-pills {
@@ -2081,7 +2081,7 @@ h6 {
 
 .custom-toast {
   padding: 16px 24px;
-  background: rgba(12, 41, 66, 0.95);
+  background: rgba(12, 35, 64, 0.95);
   border: 1px solid var(--primary);
   backdrop-filter: blur(10px);
   color: white;
