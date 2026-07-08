@@ -1593,9 +1593,9 @@ h6 {
 }
 
 .project-hero-category {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(27, 122, 140, 0.08);
+  border: 1px solid rgba(27, 122, 140, 0.25);
+  color: var(--primary);
   padding: 4px 14px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -1620,11 +1620,12 @@ h6 {
   margin-bottom: 20px;
   line-height: 1.1;
   letter-spacing: -1px;
+  color: var(--text-primary);
 }
 
 .project-hero-short-desc {
   font-size: 1.15rem;
-  color: #f7f4ef;
+  color: var(--text-secondary);
   margin-bottom: 30px;
   max-width: 800px;
   line-height: 1.6;
@@ -1658,13 +1659,14 @@ h6 {
 }
 
 .hero-action-btn.github-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary) !important;
 }
 
 .hero-action-btn.github-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--primary);
   transform: translateY(-2px);
 }
 

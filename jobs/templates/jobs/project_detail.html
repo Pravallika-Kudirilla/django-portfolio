@@ -65,11 +65,7 @@
         <div class="container project-detail-wrapper" style="margin-bottom: 60px;">
             
             <!-- Project Hero Banner -->
-            {% if job.image %}
-            <section class="project-hero glass-card" style="background-image: linear-gradient(rgba(43, 29, 22, 0.85), rgba(43, 29, 22, 0.95)), url('{{ job.get_image_url }}'); padding: 60px 40px;">
-            {% else %}
-            <section class="project-hero glass-card" style="background-image: linear-gradient(rgba(43, 29, 22, 0.85), rgba(43, 29, 22, 0.95)); padding: 60px 40px;">
-            {% endif %}
+            <section class="project-hero glass-card" style="padding: 60px 40px;">
                 <div class="project-hero-container">
                     <div class="project-hero-header">
                         <span class="project-hero-category">{{ job.title }}</span>
